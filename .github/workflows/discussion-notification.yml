@@ -31,14 +31,13 @@ jobs:
       - name: ntfy-notifications
         uses: niniyas/ntfy-action@master
         with:
-          url: '${{ secrets.NTFY_URL }}'
+          title: ${{ github.event.comment.user.login || github.event.discussion.user.login }} 给您的博客评论啦
+          url: ${{ secrets.NTFY_URL }}
           topic: ${{ secrets.NTFY_TOPIC }}
           priority: 5
           headers: '{"authorization": "Bearer ${{ secrets.NTFY_TOKEN }}"}'
-          tags: +1,partying_face,tada
-          details: |
-            There is a new comment in your blog discussions!
-              
+          tags: tada
+          details: |              
             Comment by: ${{ github.event.comment.user.login || github.event.discussion.user.login }}
             Content: ${{ github.event.comment.body || github.event.discussion.body }}
             
